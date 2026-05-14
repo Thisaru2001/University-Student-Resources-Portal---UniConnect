@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>UniConnect • Sign In</title>
-  <link rel="icon" type="image/png" href="./resources/logo.png" />
+  <title>UniConnect • Sign Up</title>
+   <link rel="icon" type="image/png" href="./resources/logo.png" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css"/>
+<link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
@@ -57,25 +57,32 @@
         <div class="field">
           <label for="uid">University ID</label>
           <div class="iw">
-            <input type="text" id="uid" placeholder="e.g. U2024-5678" required autocomplete="username" />
+            <input type="text" id="uid" placeholder="PS/2022/###" required autocomplete="UniID" />
+            <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+          </div>
+        </div>
+         <div class="field">
+          <label for="uid">First Name</label>
+          <div class="iw">
+            <input type="text" id="uid" placeholder="Isuru" required autocomplete="First Name" />
             <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
           </div>
         </div>
 
         <div class="field">
-          <label for="pwd">Password</label>
+          <label for="pwd">New Password</label>
           <div class="iw">
             <input type="password" id="pwd" placeholder="••••••••" required autocomplete="current-password" />
             <svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/><circle cx="12" cy="16" r="1" fill="#a3c9b0" stroke="none"/></svg>
           </div>
         </div>
 
-        <div class="opt-row">
+        <!-- <div class="opt-row">
           <label class="remember">
             <input type="checkbox" checked /> Remember me
           </label>
           <a href="#" class="forgot">Forgot password?</a>
-        </div>
+        </div> -->
 
         <button type="submit" class="btn">
           <span class="btn-inner">
@@ -85,13 +92,11 @@
             </svg>
           </span>
         </button>
-        <span>New here? <a href="signup.php" class="createAcc">Create account</a></span>
+         <span>Already have an account? <a href="index.php" class="createAcc">Sign In</a></span>
 
       </form>
-     
 
       <div class="form-footer">
-        
         <div class="secure">
           <span class="sdot"></span>
           SSL Encrypted
