@@ -49,10 +49,10 @@
         <div class="brand-text">Uni<span>Connect</span></div>
       </div>
 
-      <h1 class="form-heading">Welcome<br>back 👋</h1>
-      <p class="form-sub">Sign in to your student portal and continue your journey.</p>
+      <h1 class="form-heading">Welcome👋</h1>
+      <p class="form-sub">Sign Up to your student portal and continue your journey.</p>
 
-      <form id="signinForm" onsubmit="handleSignIn(event)" novalidate>
+      <form id="signupForm" onsubmit="handleSignUp(event)" novalidate>
 
         <div class="field">
           <label for="uid">University ID</label>
@@ -109,7 +109,7 @@
 
 </div>
 
-<div id="toast"></div>
+
 
 <script src="script.js"></script>
 </body>

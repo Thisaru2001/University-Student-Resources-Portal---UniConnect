@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+ 
 
 <div class="card">
 
@@ -72,7 +73,7 @@
 
         <div class="opt-row">
           <label class="remember">
-            <input type="checkbox" checked /> Remember me
+            <input id="remember" type="checkbox" checked /> Remember me
           </label>
           <a href="#" class="forgot">Forgot password?</a>
         </div>
@@ -104,7 +105,6 @@
 
 </div>
 
-<div id="toast"></div>
 
 <script src="script.js"></script>
 </body>
