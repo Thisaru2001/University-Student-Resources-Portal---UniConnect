@@ -44,7 +44,7 @@
       <div class="profile-pill">
         <span class="name">Sarah J.</span>
         <span class="code">CSE-401</span>
-        <i class="fas fa-chevron-down"></i>
+        
       </div>
     </div>
 
