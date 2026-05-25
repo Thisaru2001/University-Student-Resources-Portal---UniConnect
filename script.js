@@ -55,9 +55,15 @@ function validateCredentials(id, pwd, remember, onDone) {
     if (xhr.status === 200 && xhr.readyState === 4) {
       try {
         const response = JSON.parse(xhr.responseText);
-        if (response.success) {
-          showToast('Welcome back, ' . id + ' 🎓');
-        } else {
+       if (response.success) {
+
+    showToast(`Welcome back, ${id} 🎓`);
+
+    setTimeout(() => {
+        window.location.href = 'student.php';
+    }, 1500);
+
+} else {
           showToast(response.message || 'Login failed. Please check your credentials.');
         }
       } catch(e) {
@@ -76,3 +82,5 @@ function validateCredentials(id, pwd, remember, onDone) {
 
   xhr.send(form);
 }
+
+

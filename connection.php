@@ -5,50 +5,48 @@ class Database {
 
     public static function setUpConnection() {
         if (!isset(self::$connection)) {
-
-            self::$connection = new mysqli(
-                "localhost",
-                "root",
-                "root",
-                "uniconnectdb",
-                3306
-            );
-
-            if (self::$connection->connect_error) {
-                die(json_encode([
-                    "success" => false,
-                    "message" => "Connection failed: " . self::$connection->connect_error
-                ]));
+            // Enable exceptions for mysqli
+            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+            
+            try {
+                self::$connection = new mysqli(
+                    "localhost",
+                    "root",
+                    "root",
+                    "uniconnect",
+                    3306
+                );
+                
+                // Set charset to avoid encoding issues
+                self::$connection->set_charset("utf8mb4");
+                
+            } catch (Exception $e) {
+                // Throw a clean exception instead of die()
+                throw new Exception("Database connection failed: " . $e->getMessage());
             }
         }
     }
 
     public static function iud($q) {
         self::setUpConnection();
-        $result = self::$connection->query($q);
-
-        if (!$result) {
-            die(json_encode([
-                "success" => false,
-                "message" => self::$connection->error
-            ]));
+        
+        try {
+            $result = self::$connection->query($q);
+            return $result;
+        } catch (Exception $e) {
+            throw new Exception("Query failed: " . $e->getMessage());
         }
-
-        return $result;
     }
 
     public static function search($q) {
         self::setUpConnection();
-        $result = self::$connection->query($q);
-
-        if (!$result) {
-            die(json_encode([
-                "success" => false,
-                "message" => self::$connection->error
-            ]));
+        
+        try {
+            $result = self::$connection->query($q);
+            return $result;
+        } catch (Exception $e) {
+            throw new Exception("Search query failed: " . $e->getMessage());
         }
-
-        return $result;
     }
 }
 ?>

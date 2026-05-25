@@ -6,7 +6,7 @@
   <title>UniConnect • Sign In</title>
   <link rel="icon" type="image/png" href="./resources/logo.png" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css"/>
+<link rel="stylesheet" href="./css/signin_signup_style.css"/>
 </head>
 <body>
  
