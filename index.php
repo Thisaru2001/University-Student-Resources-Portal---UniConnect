@@ -28,10 +28,10 @@
       <div class="img-divider"></div>
       <p>Your gateway to courses, community<br>and academic resources.</p>
       <div class="pills">
-        <span class="pill">Courses</span>
-        <span class="pill">Community</span>
-        <span class="pill">Library</span>
-        <span class="pill">Support</span>
+       <span class="pill">Courses</span>
+    <span class="pill">Community</span>
+    <span class="pill">Repository</span>
+    <span class="pill">Support</span>
       </div>
     </div>
   </div>
@@ -95,9 +95,9 @@
         
         <div class="secure">
           <span class="sdot"></span>
-          SSL Encrypted
+          Encrypted
         </div>
-        <span>© 2025 UniConnect</span>
+        <span>© 2026 UniConnect</span>
       </div>
 
     </div>

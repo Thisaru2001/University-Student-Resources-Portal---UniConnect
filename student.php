@@ -6,13 +6,90 @@
   <title>Student Dashboard · Resource Hub</title>
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link rel="stylesheet" href="./css/student_style.css" />
-
-<style>
-  body{
-
-   background-image: url('./resources/cover.png');
-  }
+  <link rel="stylesheet" href="./css/student_style.css" />
+  <style>
+    body {
+      background-image: url('./resources/cover.png');
+    }
+    /* Inline style to support history view without changing external CSS */
+    #historyView {
+      display: block;
+    }
+    #historyView.hidden {
+      display: none !important;
+    }
+    .history-table-wrapper {
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 15px;
+      margin-top: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .history-table {
+      width: 100%;
+      border-collapse: collapse;
+      color: #ffffff;
+    }
+    .history-table th {
+      text-align: left;
+      padding: 16px 12px;
+      background: rgba(37, 99, 235, 0.5);
+      font-weight: 700;
+      color: #ffffff;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+      font-size: 0.95rem;
+    }
+    .history-table td {
+      padding: 14px 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+    .history-table tbody tr:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+    
+    /* Beautiful red delete button with icon */
+    .delete-btn {
+      background: #ef4444;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+    }
+    
+    .delete-btn:hover {
+      background: #dc2626;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.5);
+    }
+    
+    .delete-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
+    }
+    
+    .delete-btn i {
+      font-size: 0.9rem;
+    }
+    
+    .history-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #3f5e4b;
+      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+    }
   </style>
 </head>
 <body>
@@ -29,6 +106,9 @@
     <div class="nav-item active" id="navHome">
       <i class="fas fa-home"></i> HOME
     </div>
+    <div class="nav-item" id="navHISTORY">
+      <i class="fas fa-history"></i> HISTORY
+    </div>
     <div class="nav-item upload-highlight" id="navUpload">
       <i class="fas fa-plus-circle"></i> UPLOAD RESOURCE
     </div>
@@ -44,7 +124,6 @@
       <div class="profile-pill">
         <span class="name">Sarah J.</span>
         <span class="code">CSE-401</span>
-        
       </div>
     </div>
 
@@ -122,7 +201,50 @@
       </div>
     </div>
 
-    <!-- ========= VIEW 2: UPLOAD RESOURCE ========= -->
+    <!-- ========= VIEW 2: HISTORY (UPDATED WITH BEAUTIFUL DELETE BUTTONS) ========= -->
+    <div id="historyView" class="view-section hidden">
+      <div class="history-title">UPLOAD HISTORY</div>
+      <div class="history-table-wrapper">
+        <table class="history-table">
+          <thead>
+            <tr>
+              <th>Resource Name</th>            
+              <th>Date & Time</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Compiler Design Lecture Notes</td>
+              <td>2024-12-25 14:30:00</td>
+              <td><button class="delete-btn" onclick="deleteResource('Compiler Design Lecture Notes')"><i class="fas fa-trash-alt"></i> Delete</button></td>
+            </tr>
+            <tr>
+              <td>Algorithms Final Project</td>
+              <td>2024-12-25 14:30:00</td>
+              <td><button class="delete-btn" onclick="deleteResource('Algorithms Final Project')"><i class="fas fa-trash-alt"></i> Delete</button></td>
+            </tr>
+            <tr>
+              <td>DBMS Normalization Slides</td>
+              <td>2024-12-25 14:30:00</td>
+              <td><button class="delete-btn" onclick="deleteResource('DBMS Normalization Slides')"><i class="fas fa-trash-alt"></i> Delete</button></td>
+            </tr>
+            <tr>
+              <td>Computer Networks Lab</td>
+              <td>2024-12-25 14:30:00</td>
+              <td><button class="delete-btn" onclick="deleteResource('Computer Networks Lab')"><i class="fas fa-trash-alt"></i> Delete</button></td>
+            </tr>
+            <tr>
+              <td>Operating Systems Assignment</td>
+              <td>2024-12-25 14:30:00</td>
+              <td><button class="delete-btn" onclick="deleteResource('Operating Systems Assignment')"><i class="fas fa-trash-alt"></i> Delete</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ========= VIEW 3: UPLOAD RESOURCE ========= -->
     <div id="uploadView" class="view-section hidden">
       <div class="upload-container">
         <div class="upload-title">Upload Resource</div>
@@ -190,35 +312,61 @@
 
 <!-- ========= JAVASCRIPT: VIEW TOGGLE & INTERACTIONS ========= -->
 <script>
+  // Delete function for history items
+  function deleteResource(resourceName) {
+    if (confirm(`Are you sure you want to delete "${resourceName}"?`)) {
+      alert(`✅ "${resourceName}" has been deleted successfully!`);
+      // Here you can add actual delete logic (remove row, API call, etc.)
+      // Example: event.target.closest('tr').remove();
+    }
+  }
+
   (function() {
     const homeView = document.getElementById('homeView');
+    const historyView = document.getElementById('historyView');
     const uploadView = document.getElementById('uploadView');
     const navHome = document.getElementById('navHome');
+    const navHISTORY = document.getElementById('navHISTORY');
     const navUpload = document.getElementById('navUpload');
     const navLogout = document.getElementById('navLogout');
 
-    // Helper to switch views
+    // Helper to switch views (now includes history)
     function showView(viewId) {
-      // hide both
+      // hide all views
       homeView.classList.add('hidden');
+      historyView.classList.add('hidden');
       uploadView.classList.add('hidden');
-      // show selected
-      if (viewId === 'home') homeView.classList.remove('hidden');
-      else if (viewId === 'upload') uploadView.classList.remove('hidden');
 
-      // update sidebar active states
+      // show selected view
+      if (viewId === 'home') {
+        homeView.classList.remove('hidden');
+      } else if (viewId === 'history') {
+        historyView.classList.remove('hidden');
+      } else if (viewId === 'upload') {
+        uploadView.classList.remove('hidden');
+      }
+
+      // update sidebar active states (remove all first)
       navHome.classList.remove('active', 'upload-highlight');
+      navHISTORY.classList.remove('active', 'upload-highlight');
       navUpload.classList.remove('active', 'upload-highlight');
+
       if (viewId === 'home') {
         navHome.classList.add('active');
+      } else if (viewId === 'history') {
+        navHISTORY.classList.add('active');
       } else if (viewId === 'upload') {
-        navUpload.classList.add('upload-highlight'); // keep green style
+        navUpload.classList.add('upload-highlight'); // keep green highlight
       }
     }
 
-    // Event listeners
+    // Event listeners for navigation
     navHome.addEventListener('click', function(e) {
       showView('home');
+    });
+
+    navHISTORY.addEventListener('click', function(e) {
+      showView('history');
     });
 
     navUpload.addEventListener('click', function(e) {
@@ -235,7 +383,6 @@
     const fileSelected = document.getElementById('fileSelected');
     if (dropArea) {
       dropArea.addEventListener('click', function() {
-        // fake file picker
         const fakeFiles = ['Lecture_Notes.pdf', 'Assignment.docx', 'Slides.pptx'];
         const picked = fakeFiles[Math.floor(Math.random() * fakeFiles.length)];
         fileSelected.innerText = '📎 ' + picked + ' (2.4 MB)';
@@ -245,7 +392,6 @@
     // Upload button simulation
     document.getElementById('uploadSubmitBtn')?.addEventListener('click', function() {
       alert('✅ Resource uploaded successfully!');
-      // optional: redirect to home view after upload
       showView('home');
     });
 
@@ -263,7 +409,6 @@
       alert('🔍 Search filters applied (demo)');
     });
 
-   
   })();
 </script>
 

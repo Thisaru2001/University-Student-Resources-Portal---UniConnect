@@ -41,46 +41,45 @@ document.getElementById('uid').addEventListener('keydown', e => {
   if (e.key === 'Enter') { e.preventDefault(); document.getElementById('pwd').focus(); }
 });
 
-function validateCredentials(id, pwd, remember, onDone) {
-  let form = new FormData();
-  form.append("id", id);
-  form.append("pwd", pwd);
-  form.append("remember", remember);
+async function validateCredentials(id, pwd, remember, onDone) {
+  const formData = new FormData();
+  formData.append("id", id);
+  formData.append("pwd", pwd);
+  formData.append("remember", remember);
 
-  let xhr = new XMLHttpRequest();
-  xhr.open("POST", "signinProcess.php", true);
+  try {
+    const response = await fetch("signinProcess.php", {
+      method: "POST",
+      body: formData
+    });
 
-  xhr.onload = function() {
     onDone();
-    if (xhr.status === 200 && xhr.readyState === 4) {
-      try {
-        const response = JSON.parse(xhr.responseText);
-       if (response.success) {
 
-    showToast(`Welcome back, ${id} 🎓`);
-
-    setTimeout(() => {
-        window.location.href = 'student.php';
-    }, 1500);
-
-} else {
-          showToast(response.message || 'Login failed. Please check your credentials.');
-        }
-      } catch(e) {
-        console.error('Error parsing response:', e);
-        showToast('An error occurred during login.');
-      }
-    } else {
-      showToast('Server error. Please try again later.');
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
-  };
 
-  xhr.onerror = function() {
+    const data = await response.json();
+
+    if (data.success) {
+      showToast(`Welcome back, ${id} 🎓`);
+      
+      setTimeout(() => {
+        window.location.href = 'student.php';
+      }, 500);
+    } else {
+      showToast(data.message || 'Login failed. Please check your credentials.');
+    }
+  } catch (error) {
     onDone();
-    showToast('Network error. Please check your connection.');
-  };
-
-  xhr.send(form);
+    
+    if (error.name === 'TypeError') {
+      showToast('Network error. Please check your connection.');
+    } else {
+      console.error('Error:', error);
+      showToast('An error occurred during login.');
+    }
+  }
 }
 
 
