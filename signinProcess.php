@@ -1,8 +1,5 @@
 <?php
-// Turn off error display for production, but log errors
-error_reporting(E_ALL);
-ini_set('display_errors', 0);
-ini_set('log_errors', 1);
+
 
 // Start output buffering to catch any accidental output
 ob_start();
