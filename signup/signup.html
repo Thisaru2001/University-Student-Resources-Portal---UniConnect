@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UniConnect • Sign Up</title>
+
+  <link rel="stylesheet" href="./css/signin_signup_style.css" />
+</head>
+
+<body>
+
+<div class="card">
+
+  <!-- FORM -->
+  <div class="form-panel">
+    <div class="form-inner">
+
+      <h1>Sign Up</h1>
+
+      <form id="signupForm" onsubmit="handleSignUp(event)">
+
+        <!-- University ID -->
+        <div class="field">
+          <label>University ID</label>
+          <input type="text" id="uid" placeholder="UJ/2024/001" required />
+        </div>
+
+        <!-- First Name -->
+        <div class="field">
+          <label>First Name</label>
+          <input type="text" id="fname" placeholder="Isuru" required />
+        </div>
+
+        <!-- Email -->
+        <div class="field">
+          <label>Email</label>
+          <input type="email" id="email" placeholder="example@gmail.com" required />
+        </div>
+
+        <!-- Password -->
+        <div class="field">
+          <label>Password</label>
+          <input type="password" id="pwd" required />
+        </div>
+
+        <button type="submit" class="btn">
+          Sign Up
+        </button>
+
+      </form>
+
+    </div>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
