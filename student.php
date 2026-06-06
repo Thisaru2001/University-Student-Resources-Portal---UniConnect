@@ -3,7 +3,7 @@ session_start();
 
 $fname = $_SESSION['fname'] ?? 'User';
 $student_id = $_SESSION['student_id'] ?? 'XXX';
-require_once 'connection.php';
+require_once './backend/connection.php';
 Database::setUpConnection();
 
 // Fetch departments
@@ -755,7 +755,7 @@ function directSearch() {
         </div>
     `;
 
-    fetch(`searchAll.php?keyword=${encodeURIComponent(searchTerm)}`)
+    fetch(`./backend/searchAll.php?keyword=${encodeURIComponent(searchTerm)}`)
         .then(response => response.json())
         .then(data => {
             if (data.success) {
@@ -799,7 +799,7 @@ function directSearch() {
         </div>
     `;
 
-      fetch('searchResources.php?' + params.toString())
+      fetch('./backend/searchResources.php?' + params.toString())
         .then(response => response.json())
         .then(data => {
           if (data.success) {
@@ -821,7 +821,7 @@ function directSearch() {
     }
     // ============ LOAD RECENT RESOURCES ============
     function loadRecentResources() {
-      fetch('get_recent_resources.php')
+      fetch('./backend/get_recent_resources.php')
         .then(response => response.json())
         .then(data => {
           if (data.success) {
@@ -948,7 +948,7 @@ function directSearch() {
 
       if (!department_id || !year_id || !semester) return;
 
-      fetch(`get_courses.php?department_id=${department_id}&year_id=${year_id}&semester=${semester}`)
+      fetch(`./backend/get_courses.php?department_id=${department_id}&year_id=${year_id}&semester=${semester}`)
         .then(response => response.json())
         .then(data => {
           if (data.success) {

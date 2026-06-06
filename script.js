@@ -98,7 +98,7 @@ async function validateCredentials(id, pwd, remember, onDone) {
   formData.append("remember", remember);
 
   try {
-    const response = await fetch("signinProcess.php", { method: "POST", body: formData });
+    const response = await fetch("./backend/signinProcess.php", { method: "POST", body: formData });
     onDone();
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const data = await response.json();
@@ -147,7 +147,7 @@ function handleSignUp(e) {
   formData.append("email", email);
   formData.append("pwd", pwd);
 
-  fetch("signupProcess.php", { method: "POST", body: formData })
+  fetch("./backend/signupProcess.php", { method: "POST", body: formData })
   .then(response => response.json())
   .then(data => {
     btn.disabled = false;
@@ -245,7 +245,7 @@ function deleteResource(resourceName) {
 // ============ ADMIN PANEL FUNCTIONS (GLOBAL SCOPE) ============
 
 function loadAdminData() {
-    fetch('get_admin_data.php')
+    fetch('./backend/get_admin_data.php')
     .then(response => response.json())
     .then(data => {
         if (data.success) {
@@ -440,7 +440,7 @@ function toggleAdminStatus(studentId, action) {
     };
     
     if (confirm(messages[action])) {
-        fetch('update_student_status.php', {
+        fetch('./backend/update_student_status.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ student_id: studentId, action: action })
@@ -620,7 +620,7 @@ document.addEventListener('DOMContentLoaded', function() {
             this.disabled = true;
             const originalText = this.textContent;
             this.textContent = 'UPLOADING...';
-            fetch('resourceRegisterProcess.php', { method: 'POST', body: formData })
+            fetch('./backend/resourceRegisterProcess.php', { method: 'POST', body: formData })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {

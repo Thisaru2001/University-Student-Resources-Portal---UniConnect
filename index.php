@@ -125,7 +125,7 @@
         return;
       }
       // Redirect to forgot password page with the ID
-      window.location.href = 'forgot_password.php?uid=' + encodeURIComponent(uid);
+      window.location.href = './backend/forgot_password.php?uid=' + encodeURIComponent(uid);
     }
   </script>
 </body>
