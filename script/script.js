@@ -517,7 +517,7 @@ document.addEventListener('DOMContentLoaded', function() {
     navUpload.addEventListener('click', () => showView('upload'));
     navLogout.addEventListener('click', () => {
         if (confirm('Are you sure you want to logout?')) {
-            window.location.href = 'logout.php';
+           window.location.href = '../backend/logout.php';
         }
     });
 
