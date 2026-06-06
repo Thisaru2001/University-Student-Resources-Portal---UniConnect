@@ -735,7 +735,7 @@ $history_result = $stmt->get_result();
     // ============ PASSED FROM PHP ============
     const currentUserId = <?php echo $_SESSION['user_id'] ?? 0; ?>;
 </script>
-  <script src="./script.js"></script>
+  <script src="./script/script.js"></script>
 
   <script>
     // ============ DIRECT SEARCH (No Reset) ============

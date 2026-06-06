@@ -116,7 +116,7 @@
   </div>
 
 
-  <script src="script.js"></script>
+  <script src="./script/script.js"></script>
   <script>
     function goToForgotPassword() {
       const uid = document.getElementById('uid').value.trim();
