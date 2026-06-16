@@ -15,9 +15,9 @@
 
   <div class="card">
 
-    <!-- ── LEFT: IMAGE ── -->
+  
     <div class="img-panel">
-      <!-- Replace with your own image path -->
+
       <img src="./resources/signin.png" alt="Campus" />
 
       <div class="img-logo">
@@ -101,14 +101,19 @@
         </form>
 
 
-        <div class="form-footer">
-
-          <div class="secure">
-            <span class="sdot"></span>
-            Encrypted
-          </div>
-          <span>© 2026 UniConnect</span>
-        </div>
+       <div class="form-footer">
+  <div class="secure">
+    <span class="sdot"></span>
+    Encrypted
+  </div>
+  <div class="footer-links">
+    <span>© 2026 UniConnect</span>
+    <span>|</span>
+    <span>University of Kelaniya</span>
+    <span>|</span>
+    <a href="javascript:void(0)" onclick="showPrivacy()">Privacy</a>
+  </div>
+</div>
 
       </div>
     </div>
@@ -124,7 +129,7 @@
         showToast('Please enter your University ID first');
         return;
       }
-      // Redirect to forgot password page with the ID
+     
       window.location.href = './backend/forgot_password.php?uid=' + encodeURIComponent(uid);
     }
   </script>

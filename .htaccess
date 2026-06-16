@@ -1,0 +1,6 @@
+# Disable Apache gzip compression for the proxy (gzip buffers everything)
+<FilesMatch "chatProxy\.php$">
+    SetEnv no-gzip 1
+    SetEnv dont-vary 1
+    Header set X-Accel-Buffering "no"
+</FilesMatch>

@@ -40,7 +40,7 @@ $history_result = $stmt->get_result();
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Student Dashboard · Resource Hub</title>
-   <link rel="icon" type="image/png" href="./resources/logo.png" />
+  <link rel="icon" type="image/png" href="./resources/logo.png" />
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="./css/student_style.css" />
@@ -136,9 +136,10 @@ $history_result = $stmt->get_result();
       letter-spacing: 0.5px;
     }
 
+
     /* Prevent layout shift on student dashboard */
     .dashboard-container {
-      max-width: 1300px;
+      max-width: 1400px;
       width: 100%;
       margin: 0 auto;
     }
@@ -365,6 +366,10 @@ $history_result = $stmt->get_result();
         height: 220px;
       }
     }
+
+    #pressing.hidden {
+      display: none !important;
+    }
   </style>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
@@ -390,6 +395,9 @@ $history_result = $stmt->get_result();
       <div class="nav-item upload-highlight" id="navUpload">
         <i class="fas fa-plus-circle"></i> UPLOAD RESOURCE
       </div>
+      <div class="nav-item" id="navChatbot">
+        <i class="fas fa-robot"></i> AI Assistant
+      </div>
       <!-- Admin button - only visible for admins -->
       <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1): ?>
         <div class="nav-item admin-highlight" id="navAdmin">
@@ -404,7 +412,7 @@ $history_result = $stmt->get_result();
     <!-- MAIN CONTENT -->
     <div class="main-content">
       <!-- top right profile -->
-      <div class="top-bar">
+      <div class="top-bar press-chatbot" id="pressing">
         <div class="profile-pill">
           <span class="name"><?php echo htmlspecialchars($fname); ?></span>
           <span class="code"><?php echo htmlspecialchars($student_id); ?></span>
@@ -415,15 +423,15 @@ $history_result = $stmt->get_result();
       <!-- ========= VIEW 1: HOME ========= -->
       <div id="homeView" class="view-section">
         <!-- DIRECT SEARCH (No Reset Button) -->
-       <div class="direct-search-wrapper" style="margin-bottom: 20px; background: #ffffff; padding: 20px; border-radius: 16px; border: 1px solid rgba(0, 0, 0, 0.06); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);">
-    <label style="display: block; font-size: 13px; font-weight: 600; color: #1a1a2e; margin-bottom: 8px;">
-        🔍 DIRECT COURSE SEARCH
-    </label>
-    
-    <div style="display: flex; align-items: center; position: relative;">
-        <input type="text" id="directSearchInput"
-            placeholder="Type course code ,name or keywords"
-            style="
+        <div class="direct-search-wrapper" style="margin-bottom: 20px; background: #ffffff; padding: 20px; border-radius: 16px; border: 1px solid rgba(0, 0, 0, 0.06); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);">
+          <label style="display: block; font-size: 13px; font-weight: 600; color: #1a1a2e; margin-bottom: 8px;">
+            🔍 DIRECT COURSE SEARCH
+          </label>
+
+          <div style="display: flex; align-items: center; position: relative;">
+            <input type="text" id="directSearchInput"
+              placeholder="Type course code ,name or keywords"
+              style="
                 width: 100%;
                 padding: 12px 120px 12px 16px;
                 border: 2px solid #e0e0e0;
@@ -434,8 +442,8 @@ $history_result = $stmt->get_result();
                 background: #f8f9fa;
                 height: 48px;
             ">
-        
-        <button onclick="directSearch()" style="
+
+            <button onclick="directSearch()" style="
             position: absolute;
             right: 6px;
             top: 50%;
@@ -454,71 +462,71 @@ $history_result = $stmt->get_result();
             gap: 6px;
             height: 38px;
         ">
-            <i class="fas fa-search"></i> SEARCH
-        </button>
-    </div>
-</div>
+              <i class="fas fa-search"></i> SEARCH
+            </button>
+          </div>
+        </div>
 
         <!-- FILTERS SECTION -->
-       <!-- FILTERS SECTION -->
-<div class="filter-grid">
-    <div class="filter-item">
-        <label>DEPARTMENT</label>
-        <select id="filterDepartment">
-            <option value="">All Departments</option>
-            <?php
-            mysqli_data_seek($dept_result, 0);
-            while ($dept = $dept_result->fetch_assoc()):
-            ?>
+        <!-- FILTERS SECTION -->
+        <div class="filter-grid">
+          <div class="filter-item">
+            <label>DEPARTMENT</label>
+            <select id="filterDepartment">
+              <option value="">All Departments</option>
+              <?php
+              mysqli_data_seek($dept_result, 0);
+              while ($dept = $dept_result->fetch_assoc()):
+              ?>
                 <option value="<?php echo $dept['department_id']; ?>"><?php echo htmlspecialchars($dept['department_name']); ?></option>
-            <?php endwhile; ?>
-        </select>
-    </div>
-    <div class="filter-item">
-        <label>YEAR</label>
-        <select id="filterYear">
-            <option value="">All Years</option>
-            <?php
-            mysqli_data_seek($year_result, 0);
-            while ($year = $year_result->fetch_assoc()):
-            ?>
+              <?php endwhile; ?>
+            </select>
+          </div>
+          <div class="filter-item">
+            <label>YEAR</label>
+            <select id="filterYear">
+              <option value="">All Years</option>
+              <?php
+              mysqli_data_seek($year_result, 0);
+              while ($year = $year_result->fetch_assoc()):
+              ?>
                 <option value="<?php echo $year['year_id']; ?>"><?php echo htmlspecialchars($year['year']); ?></option>
-            <?php endwhile; ?>
-        </select>
-    </div>
-    <div class="filter-item">
-        <label>SEMESTER</label>
-        <select id="filterSemester">
-            <option value="">All Semesters</option>
-            <?php for ($i = 1; $i <= 8; $i++): ?>
+              <?php endwhile; ?>
+            </select>
+          </div>
+          <div class="filter-item">
+            <label>SEMESTER</label>
+            <select id="filterSemester">
+              <option value="">All Semesters</option>
+              <?php for ($i = 1; $i <= 8; $i++): ?>
                 <option value="<?php echo $i; ?>">Semester <?php echo $i; ?></option>
-            <?php endfor; ?>
-        </select>
-    </div>
-    <div class="filter-item">
-        <label>TYPE</label>
-        <select id="filterType">
-            <option value="">All Types</option>
-            <?php
-            mysqli_data_seek($type_result, 0);
-            while ($type = $type_result->fetch_assoc()):
-            ?>
+              <?php endfor; ?>
+            </select>
+          </div>
+          <div class="filter-item">
+            <label>TYPE</label>
+            <select id="filterType">
+              <option value="">All Types</option>
+              <?php
+              mysqli_data_seek($type_result, 0);
+              while ($type = $type_result->fetch_assoc()):
+              ?>
                 <option value="<?php echo $type['id']; ?>"><?php echo htmlspecialchars($type['type']); ?></option>
-            <?php endwhile; ?>
-        </select>
-    </div>
-    <div class="filter-item">
-        <label>COURSE</label>
-        <select id="filterCourse" style="width: 400px;">
-            <option value="">All Courses</option>
-            <!-- Courses will be loaded here via JavaScript -->
-        </select>
-    </div>
-</div>
+              <?php endwhile; ?>
+            </select>
+          </div>
+          <div class="filter-item">
+            <label>COURSE</label>
+            <select id="filterCourse" style="width: 400px;">
+              <option value="">All Courses</option>
+              <!-- Courses will be loaded here via JavaScript -->
+            </select>
+          </div>
+        </div>
 
-<div class="search-btn-wrapper" style="margin-top: 15px;">
-    <button class="search-btn" onclick="searchResources()"><i class="fas fa-filter"></i> APPLY FILTERS & SEARCH</button>
-</div>
+        <div class="search-btn-wrapper" style="margin-top: 15px;">
+          <button class="search-btn" onclick="searchResources()"><i class="fas fa-filter"></i> APPLY FILTERS & SEARCH</button>
+        </div>
 
         <div class="section-title" id="sectionTitle">RECENT RESOURCES</div>
         <div class="card-grid" id="resourceGrid">
@@ -571,7 +579,7 @@ $history_result = $stmt->get_result();
 
           <div class="form-group">
             <label>File Name</label>
-          <textarea class="form-control" id="customFileName" name="customFileName" rows="1" placeholder="Enter custom file name (without extension)..."></textarea>
+            <textarea class="form-control" id="customFileName" name="customFileName" rows="1" placeholder="Enter custom file name (without extension)..."></textarea>
           </div>
 
           <div class="form-row">
@@ -667,7 +675,243 @@ $history_result = $stmt->get_result();
         </div>
       </div>
 
-      <!-- ========= VIEW 4: ADMIN PANEL ========= -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <!-- ========= VIEW 4: AI Assistant ========= -->
+      <div id="chatbotView" class="view-section hidden">
+        <div class="chatgpt-container">
+
+          <!-- Sidebar -->
+          <div class="chat-sidebar">
+            <div class="chat-sidebar-header">Chats</div>
+            <div class="new-chat-btn">
+              <i class="fas fa-plus"></i> New Chat
+            </div>
+            <div class="chat-history">
+              <div class="chat-item active">Smart Meter Analysis</div>
+              <div class="chat-item">Energy Consumption Report</div>
+              <div class="chat-item">Voltage Monitoring</div>
+            </div>
+          </div>
+
+          <!-- Main Chat -->
+          <div class="chat-main">
+
+            <!-- Top bar: model selector -->
+            <div class="chat-topbar">
+              <span class="chat-topbar-title"><i class="fas fa-robot"></i> &nbsp;AI Assistant</span>
+              <div class="model-select-wrapper">
+                <label>Model</label>
+                <select id="modelSelect">
+                  <option value="qwen3.5:4b" selected>Qwen3.5</option>
+                  <option value="claude-haiku-4-5-20251001">Claude Haiku 4.5</option>
+                </select>
+
+                <button id="deepThinkBtn" class="deepthink-btn">
+                  <i class="fas fa-brain"></i>
+                  <span class="btn-text">DeepThink</span>
+                </button>
+
+                 <button id="webSearchBtn" class="websearch-btn" title="Enable web search for this message">
+    <i class="fas fa-globe"></i>
+    <span class="btn-text">Web Search</span>
+  </button>
+              </div>
+            </div>
+
+            <!-- Messages -->
+            <div class="chat-messages" id="chatMessages">
+              <div class="message ai">
+                <div class="avatar"><i class="fas fa-robot"></i></div>
+                <div class="message-content">
+                  Hello! I'm your AI study assistant. Ask me anything about your courses, resources, or topics you're studying.
+                </div>
+              </div>
+            </div>
+
+            <!-- Input -->
+            <div class="chat-input-area">
+              <div class="chat-input-box">
+                <textarea id="chatInput" placeholder="Ask anything..." rows="1"></textarea>
+                <div class="input-actions">
+                  <label class="attach-btn" title="Attach file">
+                    <i class="fas fa-paperclip"></i>
+                    <input type="file" id="chatFileInput" style="display:none;" accept=".pdf,.doc,.docx,.txt">
+                  </label>
+                  <button class="send-btn" id="sendBtn" title="Send">
+                    <i class="fas fa-paper-plane"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="input-hint">AI can make mistakes. Verify important information.</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <!-- ========= VIEW 5: ADMIN PANEL ========= -->
       <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1): ?>
         <div id="adminView" class="view-section hidden">
           <div class="admin-dashboard">
@@ -734,47 +978,47 @@ $history_result = $stmt->get_result();
   <script>
     // ============ PASSED FROM PHP ============
     const currentUserId = <?php echo $_SESSION['user_id'] ?? 0; ?>;
-</script>
+  </script>
   <script src="./script/script.js"></script>
 
   <script>
     // ============ DIRECT SEARCH (No Reset) ============
- // ============ DIRECT SEARCH (Universal Search) ============
-function directSearch() {
-    const searchTerm = document.getElementById('directSearchInput').value.trim();
+    // ============ DIRECT SEARCH (Universal Search) ============
+    function directSearch() {
+      const searchTerm = document.getElementById('directSearchInput').value.trim();
 
-    if (!searchTerm) {
+      if (!searchTerm) {
         loadRecentResources();
         return;
-    }
+      }
 
-    document.getElementById('resourceGrid').innerHTML = `
+      document.getElementById('resourceGrid').innerHTML = `
         <div style="grid-column: 1/-1; text-align:center; padding: 40px;">
             <i class="fas fa-spinner fa-spin" style="font-size: 48px; color: #2d6a4f;"></i>
             <p style="margin-top: 15px;">Searching for "${searchTerm}" across all resources...</p>
         </div>
     `;
 
-    fetch(`./backend/searchAll.php?keyword=${encodeURIComponent(searchTerm)}`)
+      fetch(`./backend/searchAll.php?keyword=${encodeURIComponent(searchTerm)}`)
         .then(response => response.json())
         .then(data => {
-            if (data.success) {
-                document.getElementById('sectionTitle').textContent = `SEARCH RESULTS (${data.count} found)`;
-                displayResources(data.resources);
-            } else {
-                throw new Error(data.message || 'Search failed');
-            }
+          if (data.success) {
+            document.getElementById('sectionTitle').textContent = `SEARCH RESULTS (${data.count} found)`;
+            displayResources(data.resources);
+          } else {
+            throw new Error(data.message || 'Search failed');
+          }
         })
         .catch(error => {
-            console.error('Search error:', error);
-            document.getElementById('resourceGrid').innerHTML = `
+          console.error('Search error:', error);
+          document.getElementById('resourceGrid').innerHTML = `
                 <div style="grid-column: 1/-1; text-align:center; padding: 40px; color: #c0392b;">
                     <i class="fas fa-exclamation-circle" style="font-size: 48px;"></i>
                     <p>Error searching. Please try again.</p>
                 </div>
             `;
         });
-}
+    }
 
     // ============ APPLY FILTERS SEARCH ============
     // ============ APPLY FILTERS SEARCH ============
@@ -879,10 +1123,10 @@ function directSearch() {
     // }
 
     // ============ DISPLAY RESOURCES ============
-   function displayResources(resources) {
-    const grid = document.getElementById('resourceGrid');
+    function displayResources(resources) {
+      const grid = document.getElementById('resourceGrid');
 
-    if (!resources || resources.length === 0) {
+      if (!resources || resources.length === 0) {
         grid.innerHTML = `
             <div style="grid-column: 1/-1; text-align:center; padding: 40px; color: #547a61;">
                 <i class="fas fa-folder-open" style="font-size: 48px; margin-bottom: 15px; display: block;"></i>
@@ -891,21 +1135,21 @@ function directSearch() {
             </div>
         `;
         return;
-    }
+      }
 
-    let html = '';
-    resources.forEach(resource => {
+      let html = '';
+      resources.forEach(resource => {
         let iconClass = 'pdf';
         let iconIcon = 'fa-file-pdf';
         if (resource.file_ext === 'doc' || resource.file_ext === 'docx') {
-            iconClass = 'docx';
-            iconIcon = 'fa-file-word';
+          iconClass = 'docx';
+          iconIcon = 'fa-file-word';
         } else if (resource.file_ext === 'ppt' || resource.file_ext === 'pptx') {
-            iconClass = 'pptx';
-            iconIcon = 'fa-file-powerpoint';
+          iconClass = 'pptx';
+          iconIcon = 'fa-file-powerpoint';
         } else if (resource.file_ext === 'txt') {
-            iconClass = 'pdf';
-            iconIcon = 'fa-file-alt';
+          iconClass = 'pdf';
+          iconIcon = 'fa-file-alt';
         }
 
         html += `
@@ -924,10 +1168,10 @@ function directSearch() {
                 </a>
             </div>
         `;
-    });
+      });
 
-    grid.innerHTML = html;
-}
+      grid.innerHTML = html;
+    }
 
     function escapeHtml(text) {
       if (!text) return '';
