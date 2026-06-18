@@ -597,7 +597,7 @@
 }
 
 .model-select-wrapper label {
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 600;
   color: #1a3d26;
 }
@@ -614,7 +614,7 @@
 }
 
 .chat-topbar-title {
-  font-size: 14px;
+  font-size: 20px;
   font-weight: 600;
   color: #1f5335;
 }
@@ -917,4 +917,28 @@
 .websearch-btn.active {
   background: rgba(52, 152, 219, 0.5);
   border-color: #3498db;
+}
+
+/* Display images in chat nicely */
+.chat-messages img {
+    max-width: 250px;
+    max-height: 250px;
+    border-radius: 12px;
+    margin-top: 8px;
+    border: 1px solid #d4e8d5;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    object-fit: cover;
+}
+
+
+/* --- Fix bullet point spacing --- */
+.chat-messages .message.ai ul,
+.chat-messages .message.ai ol {
+    padding-left: 24px !important;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.chat-messages .message.ai li {
+    margin-bottom: 4px;
 }

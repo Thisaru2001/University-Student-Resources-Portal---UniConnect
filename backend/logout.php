@@ -1,4 +1,5 @@
 <?php
+require_once 'logger.php';
 session_start();
 
 // Clear all session variables

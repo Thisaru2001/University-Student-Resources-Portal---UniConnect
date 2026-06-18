@@ -1,4 +1,5 @@
 <?php
+require_once 'logger.php';
 session_start();
 header('Content-Type: application/json');
 
@@ -91,6 +92,10 @@ switch ($action) {
 $stmt->bind_param("i", $targetStudentId);
 
 if ($stmt->execute()) {
+     writeLog(
+        'Admin ' . ucfirst($action) . ' Student',
+        $_SESSION['user_id']
+    );
     echo json_encode([
         'success' => true, 
         'message' => 'Status updated successfully',

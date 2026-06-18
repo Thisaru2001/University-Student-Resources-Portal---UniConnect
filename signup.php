@@ -52,7 +52,7 @@
         </div>
 
         <h1 class="form-heading">Welcome👋</h1>
-        <p class="form-sub">Sign Up to your student portal and continue your journey.</p>
+        <!-- <p class="form-sub">Sign Up to your student portal and continue your journey.</p> -->
 
         <form id="signupForm" onsubmit="handleSignUp(event)" novalidate>
 
@@ -99,6 +99,15 @@
                 <path d="M3 10h18M8 3v4M16 3v4" />
               </svg>
             </div>
+          </div>
+          
+          <!-- Terms & Conditions Checkbox -->
+          <div class="terms-checkbox">
+            <label>
+              <input type="checkbox" id="tcp" required>
+              I agree to the <a href="terms&contidion.php" target="_blank">Terms and Conditions Privacy Policy</a> 
+            
+            </label>
           </div>
 
           <button type="submit" class="btn">

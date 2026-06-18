@@ -811,3 +811,33 @@ form>span {
     justify-content: center;
   }
 }
+
+.terms-checkbox {
+  margin: 12px 0 18px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.terms-checkbox label {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.terms-checkbox input[type="checkbox"] {
+  margin-top: 3px;
+  accent-color: #4f8a5b;
+  cursor: pointer;
+}
+
+.terms-checkbox a {
+  color: #4f8a5b;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.terms-checkbox a:hover {
+  text-decoration: underline;
+}

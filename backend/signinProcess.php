@@ -1,4 +1,5 @@
 <?php
+require_once 'logger.php';
 // Start output buffering to catch any accidental output
 ob_start();
 
@@ -104,6 +105,10 @@ if (!preg_match('/^[A-Za-z]{2}\/\d{4}\/\d{3}$/', $id)) {
                 ]);
             }
             
+             writeLog(
+                'Logged In',
+                $_SESSION['student_id']
+            );
             $response = [
                 'success' => true, 
                 

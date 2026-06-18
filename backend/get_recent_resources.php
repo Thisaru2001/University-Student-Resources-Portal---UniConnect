@@ -1,4 +1,5 @@
 <?php
+require_once 'logger.php';
 session_start();
 header('Content-Type: application/json');
 

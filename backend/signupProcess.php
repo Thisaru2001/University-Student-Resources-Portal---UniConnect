@@ -1,4 +1,5 @@
 <?php
+require_once 'logger.php';
 // error_reporting(E_ALL);
 // ini_set('display_errors', 1);
 // Start output buffering to catch any accidental output
@@ -16,6 +17,10 @@ try {
     $fname = trim($_POST['fname'] ?? '');
     $email = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
     $pwd = trim($_POST['pwd'] ?? '');
+    // If the checkbox is NOT checked (value '0' or not set)
+    if (!isset($_POST['tcp']) || $_POST['tcp'] !== '1') {
+        throw new Exception('You must accept the terms & conditions and our policies.');
+    }
 
     // Validate empty fields
     if (empty($student_id) || empty($fname) || empty($email) || empty($pwd)) {
@@ -23,9 +28,9 @@ try {
     }
 
     // Validate ID pattern: XX/XXXX/XXX (e.g., UJ/2024/001)
-   if (!preg_match('/^[A-Za-z]{2}\/\d{4}\/\d{3}$/', $student_id)) {
-    throw new Exception('Invalid ID format. Use format: XX/XXXX/XXX');
-}
+    if (!preg_match('/^[A-Za-z]{2}\/\d{4}\/\d{3}$/', $student_id)) {
+        throw new Exception('Invalid ID format. Use format: XX/XXXX/XXX');
+    }
     // Validate email format
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         throw new Exception('Invalid email format');
@@ -34,6 +39,17 @@ try {
     // Validate password length (minimum 6 characters)
     if (strlen($pwd) < 6) {
         throw new Exception('Password must be at least 6 characters');
+    }
+    // ONE condition that checks ALL requirements
+    if (
+        strlen($pwd) < 6 ||
+        !preg_match('/[A-Z]/', $pwd) ||
+        !preg_match('/[a-z]/', $pwd) ||
+        !preg_match('/[0-9]/', $pwd) ||
+        !preg_match('/[^a-zA-Z0-9]/', $pwd)
+    ) {
+
+        throw new Exception('Password must be at least 6 characters and contain: 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character');
     }
 
     // Validate name length
@@ -84,7 +100,7 @@ try {
         throw new Exception('Prepare failed: ' . Database::$connection->error);
     }
 
-    $insertStmt->bind_param("sssss", $student_id, $fname, $hashed_password, $created_at,$email);
+    $insertStmt->bind_param("sssss", $student_id, $fname, $hashed_password, $created_at, $email);
 
     if (!$insertStmt->execute()) {
         throw new Exception('Registration failed. Please try again later.');
@@ -99,6 +115,10 @@ try {
     $_SESSION['fname'] = $fname;
     $_SESSION['admin'] = 0;
 
+      writeLog(
+        'Student Registered',
+        $_SESSION['student_id']
+    );
     $response = [
         'success' => true,
         'message' => 'Registration successful! Welcome, ' . $fname . ' 🎓',
@@ -117,4 +137,3 @@ try {
 ob_end_clean();
 echo json_encode($response);
 exit();
-?>

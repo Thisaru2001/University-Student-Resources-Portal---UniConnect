@@ -357,6 +357,142 @@ $history_result = $stmt->get_result();
       background: rgba(237, 137, 54, 0.5);
     }
 
+    .admin-tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 20px 0 10px 0;
+    }
+
+    .admin-tab-button {
+      background: #ffffff;
+      border: 1px solid #d1d5db;
+      color: #111827;
+      padding: 10px 18px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    }
+
+    .admin-tab-button.active {
+      background: #1f5335;
+      color: white;
+      border-color: #1f5335;
+    }
+
+    .admin-panel-section {
+      display: none;
+    }
+
+    .admin-panel-section.active {
+      display: block;
+    }
+
+    .admin-table-section .admin-table th,
+    .admin-table-section .admin-table td {
+      white-space: nowrap;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 20px;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-card {
+      width: min(760px, 100%);
+      background: white;
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+      position: relative;
+      max-height: calc(100vh - 80px);
+      overflow-y: auto;
+    }
+
+    .modal-card h3 {
+      margin-top: 0;
+      margin-bottom: 14px;
+      font-size: 22px;
+      color: #0f172a;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      border: none;
+      background: transparent;
+      font-size: 18px;
+      cursor: pointer;
+      color: #4b5563;
+    }
+
+    .modal-field {
+      margin-bottom: 12px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .modal-field strong {
+      display: inline-block;
+      width: 130px;
+      color: #111827;
+    }
+
+    .modal-textarea {
+      width: 100%;
+      min-height: 120px;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 14px;
+      resize: vertical;
+      font-family: inherit;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .modal-button {
+      border: none;
+      border-radius: 12px;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: background 0.2s ease;
+    }
+
+    .modal-button.primary {
+      background: #1f5335;
+      color: white;
+    }
+
+    .modal-button.danger {
+      background: #ef4444;
+      color: white;
+    }
+
+    .modal-button.secondary {
+      background: #f3f4f6;
+      color: #111827;
+    }
+
     @media (max-width: 768px) {
       .admin-stats-grid {
         grid-template-columns: 1fr;
@@ -370,9 +506,83 @@ $history_result = $stmt->get_result();
     #pressing.hidden {
       display: none !important;
     }
-  </style>
 
+    /* --- AI CODE BLOCK STYLES --- */
+    pre {
+      background: #f7f7f8 !important;
+      border-radius: 8px !important;
+      padding: 20px 15px !important;
+      border: 1px solid #e5e5e5 !important;
+      position: relative !important;
+      margin: 10px 0 !important;
+      overflow-x: auto !important;
+    }
+
+    code {
+      font-family: 'Consolas', 'Courier New', monospace !important;
+      font-size: 14px !important;
+    }
+
+    .code-copy-wrapper {
+      position: relative;
+      margin: 15px 0;
+    }
+
+    .copy-code-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #ffffff;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #374151;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: all 0.2s ease;
+      z-index: 10;
+    }
+
+    .copy-code-btn:hover {
+      opacity: 1;
+      background: #f3f4f6;
+    }
+
+    .response-time {
+      display: block;
+      margin-top: 8px;
+      font-size: 12px;
+      color: #888;
+      opacity: 0.8;
+    }
+
+    /* --- Add Clean Language Label (e.g., "python", "php", "js") --- */
+    pre[class*="language-"]::before {
+      content: attr(class);
+      /* This regex removes "language-" so only "python" or "php" remains */
+      text-transform: lowercase;
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      padding: 20px 35px 20px 15px !important;
+      background: #e5e5e5;
+      color: #555;
+      font-size: 11px;
+      font-weight: 600;
+      font-family: 'Consolas', 'Courier New', monospace;
+      border-top-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+      border: 1px solid #e5e5e5;
+      pointer-events: none;
+      /* Allows clicking through the label */
+      z-index: 5;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
 </head>
 
 <body>
@@ -396,7 +606,7 @@ $history_result = $stmt->get_result();
         <i class="fas fa-plus-circle"></i> UPLOAD RESOURCE
       </div>
       <div class="nav-item" id="navChatbot">
-        <i class="fas fa-robot"></i> AI Assistant
+        <i class="fas fa-robot"></i> AI ChatBot
       </div>
       <!-- Admin button - only visible for admins -->
       <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1): ?>
@@ -413,6 +623,9 @@ $history_result = $stmt->get_result();
     <div class="main-content">
       <!-- top right profile -->
       <div class="top-bar press-chatbot" id="pressing">
+
+
+
         <div class="profile-pill">
           <span class="name"><?php echo htmlspecialchars($fname); ?></span>
           <span class="code"><?php echo htmlspecialchars($student_id); ?></span>
@@ -677,99 +890,40 @@ $history_result = $stmt->get_result();
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       <!-- ========= VIEW 4: AI Assistant ========= -->
       <div id="chatbotView" class="view-section hidden">
         <div class="chatgpt-container">
 
           <!-- Sidebar -->
-          <div class="chat-sidebar">
-            <div class="chat-sidebar-header">Chats</div>
-            <div class="new-chat-btn">
-              <i class="fas fa-plus"></i> New Chat
-            </div>
-            <div class="chat-history">
-              <div class="chat-item active">Smart Meter Analysis</div>
-              <div class="chat-item">Energy Consumption Report</div>
-              <div class="chat-item">Voltage Monitoring</div>
-            </div>
-          </div>
+<div class="chat-sidebar">
+  <div class="chat-sidebar-header">Chats</div>
+  <div class="new-chat-btn" id="newChatBtn">
+    <i class="fas fa-plus"></i> New Chat
+  </div>
+  <div class="chat-history" id="chatSessionList">
+    <!-- loaded by JS -->
+  </div>
+  <div style="padding: 10px 12px; border-top: 1px solid rgba(255,255,255,0.08); margin-top: auto;">
+    <button id="deleteAllChatsBtn" style="width:100%; background:rgba(239,68,68,0.2); color:#fca5a5; border:1px solid rgba(239,68,68,0.3); border-radius:8px; padding:8px; font-size:12px; font-weight:600; cursor:pointer;">
+      <i class="fas fa-trash-alt"></i> Delete All Chats
+    </button>
+  </div>
+</div>
 
           <!-- Main Chat -->
           <div class="chat-main">
 
             <!-- Top bar: model selector -->
             <div class="chat-topbar">
-              <span class="chat-topbar-title"><i class="fas fa-robot"></i> &nbsp;AI Assistant</span>
+              <span class="chat-topbar-title"><i class="fas fa-robot"></i> &nbsp;AI ChatBot</span>
               <div class="model-select-wrapper">
-                <label>Model</label>
+                <label>Model:</label>
                 <select id="modelSelect">
-                  <option value="qwen3.5:4b" selected>Qwen3.5</option>
-                  <option value="claude-haiku-4-5-20251001">Claude Haiku 4.5</option>
+                  <option value="qwen3.5:4b" selected>General Chat (Local Qwen)</option>
+                  <option value="openai/gpt-oss-120b">GPT-OSS(Groq)</option>
+                  <option value="llama-3.3-70b-versatile">Llama 3.3(Smart & Reasoning)</option>
+                  <option value="llama-3.1-8b-instant">Llama 3.1(Fast & Lightweight)</option>
+                  <option value="meta-llama/llama-4-scout-17b-16e-instruct">Llama 4 Scout (Vision / Image Upload)</option>
                 </select>
 
                 <button id="deepThinkBtn" class="deepthink-btn">
@@ -777,10 +931,10 @@ $history_result = $stmt->get_result();
                   <span class="btn-text">DeepThink</span>
                 </button>
 
-                 <button id="webSearchBtn" class="websearch-btn" title="Enable web search for this message">
-    <i class="fas fa-globe"></i>
-    <span class="btn-text">Web Search</span>
-  </button>
+                <button id="webSearchBtn" class="websearch-btn" title="Enable web search for this message">
+                  <i class="fas fa-globe"></i>
+                  <span class="btn-text">Web Search</span>
+                </button>
               </div>
             </div>
 
@@ -801,8 +955,12 @@ $history_result = $stmt->get_result();
                 <div class="input-actions">
                   <label class="attach-btn" title="Attach file">
                     <i class="fas fa-paperclip"></i>
-                    <input type="file" id="chatFileInput" style="display:none;" accept=".pdf,.doc,.docx,.txt">
+                    <input type="file" id="chatFileInput" style="display:none;" accept="image/png, image/jpeg, image/gif, image/webp">
                   </label>
+
+                  <!-- ADD THIS LINE -->
+                  <img id="imagePreviewThumb" src="" alt="preview" style="display:none; width:34px; height:34px; border-radius:6px; object-fit:cover; border:1px solid #ccc; cursor:pointer;" title="Click to remove" onclick="clearImagePreview()">
+
                   <button class="send-btn" id="sendBtn" title="Send">
                     <i class="fas fa-paper-plane"></i>
                   </button>
@@ -814,100 +972,6 @@ $history_result = $stmt->get_result();
           </div>
         </div>
       </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -945,28 +1009,92 @@ $history_result = $stmt->get_result();
             </div>
 
             <!-- Students Table -->
-            <div class="admin-table-section">
-              <div class="admin-table-title">
-                <i class="fas fa-list"></i> All Students
-              </div>
-              <div class="admin-table-wrapper">
-                <table class="admin-table">
-                  <thead>
-                    <tr>
-                      <th>Student ID</th>
-                      <th>Name</th>
+            <div class="admin-tabs">
+              <button class="admin-tab-button active" id="adminTabOverview">Overview</button>
+              <button class="admin-tab-button" id="adminTabHistory">System History</button>
+              <button class="admin-tab-button" id="adminTabReports">Reported Resources</button>
+            </div>
 
-                      <th>Status</th>
-                      <th>Resources</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody id="adminStudentTableBody">
-                    <tr>
-                      <td colspan="6" style="text-align:center; padding:30px;">Loading...</td>
-                    </tr>
-                  </tbody>
-                </table>
+            <div class="admin-panel-section active" id="adminOverviewSection">
+              <div class="admin-table-section">
+                <div class="admin-table-title">
+                  <i class="fas fa-list"></i> All Students
+                </div>
+                <div class="admin-table-wrapper">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Student ID</th>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>Resources</th>
+                        <th>Joined</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="adminStudentTableBody">
+                      <tr>
+                        <td colspan="6" style="text-align:center; padding:30px;">Loading...</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="admin-panel-section" id="adminHistorySection">
+              <div class="admin-table-section">
+                <div class="admin-table-title">
+                  <i class="fas fa-history"></i> Resource Upload History
+                </div>
+                <div class="admin-table-wrapper">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Resource</th>
+                        <th>Owner</th>
+                        <th>Course</th>
+                        <th>Type</th>
+                        <th>Uploaded At</th>
+                        <th>Reports</th>
+                        <th>Details</th>
+                      </tr>
+                    </thead>
+                    <tbody id="adminHistoryTableBody">
+                      <tr>
+                        <td colspan="7" style="text-align:center; padding:30px;">Loading...</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="admin-panel-section" id="adminReportsSection">
+              <div class="admin-table-section">
+                <div class="admin-table-title">
+                  <i class="fas fa-flag"></i> Reported Resources
+                </div>
+                <div class="admin-table-wrapper">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Resource</th>
+                        <th>Owner</th>
+                        <th>Course</th>
+                        <th>Reported By</th>
+                        <th>Reason</th>
+                        <th>Reported At</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="adminReportsTableBody">
+                      <tr>
+                        <td colspan="7" style="text-align:center; padding:30px;">Loading...</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
@@ -980,6 +1108,37 @@ $history_result = $stmt->get_result();
     const currentUserId = <?php echo $_SESSION['user_id'] ?? 0; ?>;
   </script>
   <script src="./script/script.js"></script>
+
+  <div class="modal" id="resourceDetailsModal">
+    <div class="modal-card">
+      <button class="modal-close" type="button" onclick="closeModal('resourceDetailsModal')">&times;</button>
+      <h3>Resource Details</h3>
+      <div id="resourceDetailsContent">
+        <p>Loading resource details...</p>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-button secondary" type="button" onclick="closeModal('resourceDetailsModal')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="resourceReportModal">
+    <div class="modal-card">
+      <button class="modal-close" type="button" onclick="closeModal('resourceReportModal')">&times;</button>
+      <h3>Report Resource</h3>
+      <div class="modal-field">
+        <strong>Resource ID:</strong> <span id="reportResourceId">N/A</span>
+      </div>
+      <div class="modal-field">
+        <strong>Reason:</strong>
+        <textarea id="reportReason" class="modal-textarea" placeholder="Explain why this resource is inappropriate..."></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-button secondary" type="button" onclick="closeModal('resourceReportModal')">Cancel</button>
+        <button class="modal-button primary" type="button" onclick="submitResourceReport()">Submit Report</button>
+      </div>
+    </div>
+  </div>
 
   <script>
     // ============ DIRECT SEARCH (No Reset) ============
@@ -1163,9 +1322,17 @@ $history_result = $stmt->get_result();
                 <div class="meta-line"><strong>Type:</strong> ${escapeHtml(resource.resource_type)}</div>
                 <div class="uploader">Uploader: ${escapeHtml(resource.uploader_display)}</div>
                 <div class="date">Date &nbsp; ${resource.date_display}</div>
-                <a href="${escapeHtml(resource.file_path)}" download class="download-btn">
-                    DOWNLOAD ${resource.file_size ? '(' + resource.file_size + ')' : ''}
-                </a>
+                <div class="resource-actions" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+                  <button class="download-btn" onclick="window.location.href='${escapeHtml(resource.file_path)}'">
+                    <i class="fas fa-download"></i> DOWNLOAD ${resource.file_size ? '(' + resource.file_size + ')' : ''}
+                  </button>
+                  <button class="download-btn" style="background:#2563eb;" onclick="showResourceDetails(${resource.resource_id})">
+                    <i class="fas fa-info-circle"></i> DETAILS
+                  </button>
+                  <button class="download-btn" style="background:#ef4444;" onclick="openReportModal(${resource.resource_id})">
+                    <i class="fas fa-flag"></i> REPORT
+                  </button>
+                </div>
             </div>
         `;
       });

@@ -1,4 +1,5 @@
 <?php
+require_once 'logger.php';
 session_start();
 $prefilled_uid = $_GET['uid'] ?? '';
 ?>

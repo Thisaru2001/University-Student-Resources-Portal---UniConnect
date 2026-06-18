@@ -1,4 +1,5 @@
 <?php
+require_once 'logger.php';
 ob_start();
 session_start();
 header('Content-Type: application/json');
@@ -55,6 +56,10 @@ try {
         unset($_SESSION['otp']);
         unset($_SESSION['otp_expiry']);
         unset($_SESSION['otp_student_id']);
+         writeLog(
+            'Logged In',
+            $_SESSION['student_id']
+        );
 
         $response = ['success' => true, 'message' => 'Password updated successfully!'];
     } else {

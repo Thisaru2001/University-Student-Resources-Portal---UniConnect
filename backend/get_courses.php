@@ -1,4 +1,5 @@
 <?php
+require_once 'logger.php';
 require_once 'connection.php';
 Database::setUpConnection();
 
