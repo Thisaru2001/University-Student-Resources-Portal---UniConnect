@@ -9,3 +9,5 @@ backend/.env.local
 
 
 logs/
+backup.sql
+

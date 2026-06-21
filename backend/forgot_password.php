@@ -168,7 +168,7 @@ $prefilled_uid = $_GET['uid'] ?? '';
         </div>
     </div>
     
-    <a href="index.php" class="back-link">← Back to Sign In</a>
+    <a href="../index.php" class="back-link">← Back to Sign In</a>
 </div>
 
 <script>
