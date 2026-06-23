@@ -43,9 +43,9 @@ if (empty($messages)) {
     exit;
 }
 
-// ============================================================
+// 
 // 0. IDENTIFY WHICH MODEL TO USE (Groq OR Ollama)
-// ============================================================
+//
 // If the model name starts with "openai/" or "llama", send it to Groq.
 // Otherwise, send it to local Ollama.
 $isGroqModel = str_starts_with($model, 'openai/') || str_starts_with($model, 'llama') || str_starts_with($model, 'meta-llama/');

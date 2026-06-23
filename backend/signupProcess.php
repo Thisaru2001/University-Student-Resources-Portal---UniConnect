@@ -1,8 +1,6 @@
 <?php
 require_once 'logger.php';
-// error_reporting(E_ALL);
-// ini_set('display_errors', 1);
-// Start output buffering to catch any accidental output
+
 ob_start();
 
 session_start();
@@ -27,7 +25,7 @@ try {
         throw new Exception('Please fill in all fields');
     }
 
-    // Validate ID pattern: XX/XXXX/XXX (e.g., UJ/2024/001)
+    // Validate ID pattern: XX/XXXX/XXX (UJ/2024/001)
     if (!preg_match('/^[A-Za-z]{2}\/\d{4}\/\d{3}$/', $student_id)) {
         throw new Exception('Invalid ID format. Use format: XX/XXXX/XXX');
     }
@@ -37,9 +35,9 @@ try {
     }
 
     // Validate password length (minimum 6 characters)
-    if (strlen($pwd) < 6) {
-        throw new Exception('Password must be at least 6 characters');
-    }
+    // if (strlen($pwd) < 6) {
+    //     throw new Exception('Password must be at least 6 characters');
+    // }
     // ONE condition that checks ALL requirements
     if (
         strlen($pwd) < 6 ||

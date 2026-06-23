@@ -79,7 +79,7 @@
           </div>
 
           <div class="field">
-            <label for="pwd">New Password</label>
+            <label for="pwd">Password</label>
             <div class="iw">
               <input type="password" id="pwd" name="pwd" placeholder="••••••••" required autocomplete="new-password" />
               <svg viewBox="0 0 24 24">

@@ -168,10 +168,41 @@ function handleSignUp(e) {
   const pwd = document.getElementById("pwd").value.trim();
   const tcp=document.getElementById("tcp").checked;
 
+  const idPattern = /^[A-Za-z]{2}\/\d{4}\/\d{3}$/;
+
+  const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+
   if (!student_id || !fname || !email || !pwd) {
     showToast("Please fill in all fields.");
     return;
   }
+  if (!idPattern.test(student_id)) {
+     showToast("Invalid ID format. Use format: XX/XXXX/XXX");
+    return;
+}
+if (!emailPattern.test(email)) {
+    showToast("Please enter a valid email address.");
+    return;
+}
+
+if (!tcp) {
+  showToast("Please accept the Terms & Conditions.");
+  return;
+}
+
+if (
+    pwd.length < 6 ||
+    !/[A-Z]/.test(pwd) ||
+    !/[a-z]/.test(pwd) ||
+    !/[0-9]/.test(pwd) ||
+    !/[^a-zA-Z0-9]/.test(pwd)
+) {
+    showToast(
+        "Password must be at least 6 characters and contain: 1 uppercase letter, 1 number, and 1 special character."
+    );
+    return;
+}
+
 
   const btn = document.querySelector(".btn");
   btn.disabled = true;
@@ -1141,7 +1172,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // ============ SHOW ATTACH BTN ONLY FOR VISION MODEL ============ <-- ADD HERE
+  // ============ SHOW ATTACH BTN ONLY FOR VISION MODEL ============ 
   const modelSelect = document.getElementById("modelSelect");
   const attachBtn = document.querySelector(".attach-btn");
 
@@ -1153,7 +1184,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   toggleAttachBtn(); // run on load
   if (modelSelect) modelSelect.addEventListener("change", toggleAttachBtn);
- // ================================================================
+ 
 
   // ============ NEW CHAT / DELETE ALL BUTTONS ============
   const newChatBtn = document.getElementById("newChatBtn");
